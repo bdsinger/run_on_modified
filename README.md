@@ -69,7 +69,8 @@ The code could be made much more efficient. It keeps track of the modification t
 
 ## Warning: Insecure and untested
 
-The code is insecure. The command to run is executed via `system()` without inspection. The input arguments are not validated. The code has not been well exercised. Though its scope is limited, there could be serious bugs. Use at your own risk.
+* The code is insecure. The command that runs is executed via `system()` without inspection.
+* The input arguments are not validated. The code has not been well exercised. Though its scope is limited, and runs with your permissions, there could be serious bugs. Use at your own risk.
 
 ---
 <sup>1</sup> `clang++ -std=c++2a ...` as of June 2021 (clang `12.0.0`)<br>
