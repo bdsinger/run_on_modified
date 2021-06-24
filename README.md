@@ -69,7 +69,7 @@ The code could be made much more efficient. It keeps track of the modification t
 
 ## Warning: Insecure and untested
 
-* The code is insecure. The command that runs is executed via `system()` without inspection.
+* The code is insecure. The command that runs is executed via `system()` without inspection. This could result in data loss.
 * The input arguments are not validated. The code has not been well exercised. Though its scope is limited, and runs with your permissions, there could be serious bugs. Use at your own risk.
 
 ---
