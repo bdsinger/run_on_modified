@@ -8,7 +8,52 @@ The modifications here are:
  * Special treatment for modified files, since that is the main application purpose. Other filesystem events remain in the main switch statement for debugging, but could be deleted.
  * The code uses the `contains` method [added to][3] `std::unordered_map` in C++20<sup>1,2</sup>, as suggested by the Solarian Programmer.
  * Disambiguated `path_to_watch` in the lambda action function from `path_to_watch` in the main class constructor. Renamed the lambda version `file_in_question`
- * Broke paths into parent directory (ie dirname) component and filename (ie basename) component, so that user needn't pass in "./filename" if watching pwd.
+ 
+## Requirements
+ 
+A recent version of [clang][4] (2019 or newer) to use the `Makefile` as-is. More generally, a compiler supporting C++17 and draft C++20. To use `gcc`, edit the Makefile's `CXX` and possibly `CXXFLAGS` lines.
+ 
+## Building
+ 
+Just type `make`
+
+## Installing
+
+Put the binary `run_on_modified` in your `PATH`, or run it via `/path/to/run_on_modified`
+
+## Usage
+
+`run_on_modified` takes 3 required arguments in a required order:
+
+    run_on_modified <target_path> <script_path> <poll_interval_ms>
+ 
+    <target_path>:
+    Path to the file you want to modify. There must be a path component, even if it is `./some_file` in the current directory.
+ 
+    <script_path>:
+    Path to the command you want to run when the target is modified. If the command is in your `PATH` you don't need to specify the full path, otherwise you do.
+    
+    <poll_interval_ms>:
+    How long to wait between checking the status of the target's parent directory, in milliseconds.
+   
+## Example
+
+    git clone https://github.com/bdsinger/run_on_modified.git
+    cd run_on_modified
+    chmod +x ./example_to_run.sh
+    make
+    ./run_on_modified ./example_to_modify.txt ./example_to_run.sh 1000
+
+In another window:
+
+    touch ./example_to_modify.txt
+
+In the first window you should see the output:
+
+    Monitoring the directory: .
+    File modified: "example_to_modify.txt"
+    Running: ./example_to_run.sh
+    target modified 
 
 ---
 <sup>1</sup> `clang++ -std=c++2a ...` as of June 2021 (clang `12.0.0`)<br>
@@ -17,4 +62,5 @@ The modifications here are:
 [1]: https://solarianprogrammer.com/2019/01/13/cpp-17-filesystem-write-file-watcher-monitor/ "Article text for \"C++17 Filesystem - Writing a simple file watcher\""
 [2]: https://en.cppreference.com/w/cpp/header/filesystem "C++17 reference documentation for std::filesystem"
 [3]: https://en.cppreference.com/w/cpp/container/unordered_map/contains "C++20 reference documentation for std::unordered_map::contains"
+[4]: https://clang.llvm.org "Home of the Clang C/C++ Compiler, part of the LLVM Project"
 
