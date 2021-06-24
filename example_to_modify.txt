@@ -1,0 +1,6 @@
+name    color
+----    -----
+bob     purple
+jane    green
+janice  blue
+wubba pink
