@@ -1,5 +1,13 @@
 # run_on_modified
 
+This is simple utility that takes three arguments: what file to watch, what command to run when the file is modified, and how often to check the file for changes. A typical use might be:
+
+    run_on_modified ~/Documents/table.txt ~/Documents/myscript.sh 1000
+    
+which would monitor the file `table.txt` in your `Documents` folder for changes once per second, and if it changes run the script `myscript.sh` in your Documents folder. The script can be in any language, as long as it is marked executable, or you could run an existing command in your `PATH` you didn't write, like `ls`.
+
+## Background
+
 This is a quick hack to the code from this [Solarian Programmer article][1]. The article demonstrated the addition of [filesystem][2] features to C++ in C++17.
 
 The modifications here are:
@@ -54,6 +62,10 @@ In the first window you should see the output:
     File modified: "example_to_modify.txt"
     Running: ./example_to_run.sh
     target modified 
+
+## Suggested improvements
+
+The code could be made much more efficient. It keeps track of the modification times of all files in a directory, recursively, which could be lots of files when you only care about one file! The code originates from an example where any changes to the file hierarchy are detected and reported, including deletion and creation.
 
 ---
 <sup>1</sup> `clang++ -std=c++2a ...` as of June 2021 (clang `12.0.0`)<br>
