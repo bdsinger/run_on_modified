@@ -4,9 +4,11 @@ This is a quick hack to the code from this [Solarian Programmer article][1]. The
 
 The modifications here are:
 
- * Added exception handling, since otherwise irregular files (like iCloud file stubs or some symlinks) caused uncaught exceptions and an early exit on macOS.
+ * Running the noexcept version of `std::filesystem::last_write_time()` since otherwise irregular files (like iCloud file stubs or some symlinks) caused uncaught exceptions and an early exit on macOS.
  * Special treatment for modified files, since that is the main application purpose. Other filesystem events remain in the main switch statement for debugging, but could be deleted.
  * The code uses the `contains` method [added to][3] `std::unordered_map` in C++20<sup>1,2</sup>, as suggested by the Solarian Programmer.
+ * Disambiguated `path_to_watch` in the lambda action function from `path_to_watch` in the main class constructor. Renamed the lambda version `file_in_question`
+ * Broke paths into parent directory (ie dirname) component and filename (ie basename) component, so that user needn't pass in "./filename" if watching pwd.
 
 ---
 <sup>1</sup> `clang++ -std=c++2a ...` as of June 2021 (clang `12.0.0`)<br>
