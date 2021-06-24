@@ -67,6 +67,10 @@ In the first window you should see the output:
 
 The code could be made much more efficient. It keeps track of the modification times of all files in a directory, recursively, which could be lots of files when you only care about one file! The code originates from an example where any changes to the file hierarchy are detected and reported, including deletion and creation.
 
+## Warning: Insecure and untested
+
+The code is insecure. The command to run is executed via `system()` without inspection. The input arguments are not validated. The code has not been well exercised. Though its scope is limited, there could be serious bugs. Use at your own risk.
+
 ---
 <sup>1</sup> `clang++ -std=c++2a ...` as of June 2021 (clang `12.0.0`)<br>
 <sup>2</sup>  The [article][1] provides a `FileWatcher::contains` method if you'd rather not use any C++20-only features.
