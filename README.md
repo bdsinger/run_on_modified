@@ -67,7 +67,11 @@ In the first window you should see the output:
 
 ## Suggested improvements
 
-The code could be made much more efficient. It keeps track of the modification times of all files in a directory, which could be lots of files when you only care about one file! The code originates from an example where any changes to the file hierarchy are detected and reported, including deletion and creation.
+The code could be made much more efficient. 
+
+* It keeps track of the modification times of all files in a directory, which could be lots of files when you only care about one file!
+* Any changes to the file hierarchy are detected and reported, including deletion and creation.
+* Eliminate main thread polling, or polling altogether.
 
 ## Warning: Insecure and untested
 
