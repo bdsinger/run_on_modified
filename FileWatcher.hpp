@@ -11,7 +11,6 @@ enum class FileStatus {created, modified, erased};
  
 class FileWatcher {
 	public:
-		std::error_code last_ec;
 		std::string path_to_watch;
 		std::string target;
 		std::string script;
@@ -21,8 +20,9 @@ class FileWatcher {
 
 		// Keep a record of files from the base directory and their last modification time
 		FileWatcher(std::string path_to_watch, std::string target, std::string script,  std::chrono::duration<int, std::milli> delay) : path_to_watch{path_to_watch}, target{target}, script{script}, delay{delay} {
-			for(auto &file : std::filesystem::recursive_directory_iterator(path_to_watch)) {
-				paths_[file.path().string()] = std::filesystem::last_write_time(file, last_ec);
+			std::error_code ec;
+			for(auto &file : std::filesystem::directory_iterator(path_to_watch)) {
+				paths_[file.path().string()] = std::filesystem::last_write_time(file,ec);
 			}
 		}
 
@@ -45,8 +45,9 @@ class FileWatcher {
 				}
 
 				// Check if a file was created or modified
-				for(auto &file : std::filesystem::recursive_directory_iterator(path_to_watch)) {
-					auto current_file_last_write_time = std::filesystem::last_write_time(file);
+				std::error_code ec;
+				for(auto &file : std::filesystem::directory_iterator(path_to_watch)) {
+					auto current_file_last_write_time = std::filesystem::last_write_time(file,ec);
 
 					// Created
 					if(!paths_.contains(file.path())) {

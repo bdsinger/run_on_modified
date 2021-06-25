@@ -4,7 +4,19 @@
 int main(int argc, char* argv[]) {
 
 	if (argc < 4) {
-		std::cerr << "Usage: " << argv[0] << " <target_path> <script_path> <poll_interval_ms>" << '\n';
+		std::cerr << "\n\tUsage: " << argv[0] << " <target_path> <script_path> <poll_interval_ms>" << '\n';
+		const char* usage_text = R"END(
+
+	<target_path>:
+	Path to the file you want to modify. There must be a path component, even if it is `./some_file` in the current directory.
+
+	<script_path>:
+	Path to the command you want to run when the target is modified. If the command is in your `PATH` you don't need to specify the full path, otherwise you do.
+
+	<poll_interval_ms>:
+	How long to wait between checking the status of the target's parent directory, in milliseconds.
+	)END";
+		std::cerr << usage_text << '\n';
 		return -1;
 	}
 
@@ -26,11 +38,11 @@ int main(int argc, char* argv[]) {
 		if(!std::filesystem::is_regular_file(std::filesystem::path(file_in_question)) && status != FileStatus::erased) {
 			return;
 		}
-		
+
 		// strip dirname from file_in_question
 		std::filesystem::path path_in_question(file_in_question);
 		auto candidate = path_in_question.filename();
-		
+
 		// Process only target file
 		if (target != candidate) {
 			return;
@@ -52,6 +64,5 @@ int main(int argc, char* argv[]) {
 				std::cout << "Error! Unknown file status.\n";
 		}
 	});
-
 	return 0;
 }

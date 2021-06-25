@@ -1,5 +1,5 @@
 CXX := clang++
-CXXFLAGS := -std=c++2a -Wall -Wextra -pedantic
+CXXFLAGS := -std=c++2a -g -Wall -Wextra -pedantic
 RM := rm -f
 OBJECTS = run_on_modified.o
 TARGET = run_on_modified
