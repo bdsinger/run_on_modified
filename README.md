@@ -6,6 +6,8 @@ This is simple utility that takes three arguments: what file to watch, what comm
     
 which would monitor the file `table.txt` in your `Documents` folder for changes once per second, and if it changes run the script `myscript.sh` in your Documents folder. The script can be in any language, as long as it is marked executable, or you could run an existing command in your `PATH` you didn't write, like `ls`.
 
+`run_on_modified` watches changes to the filesystem rooted in the directory containing the target file. To do so, it uses a capability added to the C++ Standard Template Library in C++17, `std::filesystem`.
+
 ## Background
 
 This is a quick hack to the code from this [Solarian Programmer article][1]. The article demonstrated the addition of [filesystem][2] features to C++ in C++17.
