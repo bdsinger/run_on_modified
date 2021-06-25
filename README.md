@@ -4,7 +4,7 @@ This is simple utility that takes three arguments: what file to watch, what comm
 
     run_on_modified ~/Documents/table.txt ~/Documents/myscript.sh 1000
     
-which would monitor the file `table.txt` in your `Documents` folder for changes once per second, and if it changes run the script `myscript.sh` in your Documents folder. The script can be in any language, as long as it is marked executable, or you could run an existing command in your `PATH` you didn't write, like `ls`.
+which would monitor the file `table.txt` in your `Documents` folder for changes once per second, and if it changes run the script `myscript.sh` in your Documents folder. The script can be in any language, as long as it is marked executable, or you could run an existing command in your `PATH` you didn't write, like `ls`, or a quoted shell command, like `'echo modified'`.
 
 `run_on_modified` watches changes to the filesystem rooted in the directory containing the target file. To do so, it uses a capability added to the C++ Standard Template Library in C++17, `std::filesystem`.
 
@@ -67,7 +67,7 @@ In the first window you should see the output:
 
 ## Suggested improvements
 
-The code could be made much more efficient. It keeps track of the modification times of all files in a directory, recursively, which could be lots of files when you only care about one file! The code originates from an example where any changes to the file hierarchy are detected and reported, including deletion and creation.
+The code could be made much more efficient. It keeps track of the modification times of all files in a directory, which could be lots of files when you only care about one file! The code originates from an example where any changes to the file hierarchy are detected and reported, including deletion and creation.
 
 ## Warning: Insecure and untested
 
